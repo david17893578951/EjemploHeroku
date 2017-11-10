@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<p:messages autoUpdate="true"></p:messages>
+	<h:panelGrid columns="2">
+		<h:form id="form1">
+			<p:panel header="MANEJO DE AUTOMOVILES">
+				<p:panelGrid columns="2">
+					<h:outputText value="PLACA" />
+					<p:inputText value="#{controllerAutomovil.placa}" required="true"
+						requiredMessage="Especifique la placa" />
+					<h:outputText value="AÑO" />
+					<p:spinner value="#{controllerAutomovil.anio}" max="2016"
+						min="2010" />
+					<h:outputText value="COLOR" />
+					<p:inputText value="#{controllerAutomovil.color}" required="true"
+						requiredMessage="Especifique el color" />
+					<h:outputText value="MARCA" />
+					<p:inputText value="#{controllerAutomovil.marca}" />
+					<p:commandButton value="Agregar" icon="ui-icon-disk" update="@form form2:tabla1"
+						actionListener="#{controllerAutomovil.actionListenerAgregar()}">
+					</p:commandButton>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+		<h:form id="form2">
+			<p:panel header="LISTA DE REGISTROS">
+				<p:dataTable value="#{controllerAutomovil.lista}" var="a"
+					id="tabla1">
+					<p:column headerText="PLACA">
+						<h:outputText value="#{a.placa}" />
+					</p:column>
+					<p:column headerText="AÑO">
+						<h:outputText value="#{a.anio}" />
+					</p:column>
+					<p:column headerText="COLOR">
+						<h:outputText value="#{a.color}" />
+					</p:column>
+					<p:column headerText="MARCA">
+						<h:outputText value="#{a.marca}" />
+					</p:column>
+					<p:column headerText="ESTADO">
+						<h:outputText value="#{a.alquilado}" />
+					</p:column>
+					<p:column headerText="OPCION">
+						<p:commandButton icon="ui-icon-check"
+							actionListener="#{controllerAutomovil.actionListenerAlquilarFila(a)}"  update="@form"/>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="RESET" icon="ui-icon-refresh" update="@form"
+					actionListener="#{controllerAutomovil.actionListenerReset()}"></p:commandButton>
+
+			</p:panel>
+		</h:form>
+
+		<h:form id="form3">
+			<p:panel>
+				<h:outputText value="Placa:" />
+				<h:inputText value="#{controllerAutomovil.placa}" required="true"></h:inputText>
+				<p:commandButton icon="ui-icon-check" update="form2:tabla1"
+					actionListener="#{controllerAutomovil.actionListenerAlquilar()}"
+					value="Alquilar"></p:commandButton>
+
+			</p:panel>
+		</h:form>
+
+	</h:panelGrid>
+</body>
+</html>
